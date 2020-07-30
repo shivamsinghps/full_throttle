@@ -2,11 +2,10 @@ import React,{ Suspense } from 'react';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 import './App.css';
-import { Route , Switch} from 'react-router-dom'
+import { Route , Switch , Redirect } from 'react-router-dom'
 import {UserContext,DateContext} from './context'
 const Calendar = React.lazy(() => import('./components/UI/Calendar/Calendar'));
 const UsersList = React.lazy(() => import('./components/Users/UsersList'));
-
 
 const App = () => {
   const [user,setUser] = React.useState(null)
@@ -26,7 +25,8 @@ const App = () => {
             <UserContext.Provider value={{user,setUser}}>
             <DateContext.Provider value={{active,setActive}}>
                  <Route path='/active' exact component={Calendar} />
-                 <Route path='/full_throttle' exact component={UsersList} />
+                 <Route path='/' exact component={UsersList} />
+                 <Redirect to='/' />
             </DateContext.Provider>
             </UserContext.Provider>
         </Switch>
